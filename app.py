@@ -14,13 +14,13 @@ col1, col2 = st.columns(2)
 with col1:
     if st.button("시작"):
         time = time.time() # 현재 시각 기록
-        deadline = 0          # 종료 시간 초기화
+        end_time = 0          # 종료 시간 초기화
 with col2:
     if st.button("종료"):
         if st.session_state.start_time != 0:
             time = time.time()
             # 걸린 시간 계산 (종료 시간 - 시작 시간)
-            st.session_state.result = time - deadline
+            st.session_state.result = time - end_time
         else:
             st.warning("시작 버튼을 먼저 눌러주세요!")
 
