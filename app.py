@@ -3,7 +3,7 @@ import streamlit as st
 st.markdown("# 앱 UI 만들기")
 user_id = st.text_input("이름", placeholder="example_user")
 grade = st.radio("학년", ["1", "2", "3"], horizontal=True)
-classroom = st.radio("반", ["1", "2", "3"], horizontal=True)
+classroom = st.radio("반", ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"], horizontal=True)
 level = st.slider("난이도", 0, 100, 50)
 score = st.slider("점수", 0, 100, 50)
 question = st.text_area("소감", placeholder="소감입니다.")
