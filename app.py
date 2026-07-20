@@ -32,7 +32,7 @@ with tab2:
          st.write("포인트 아이템:")
          acc = st.multiselect("액세서리추가", ["모자", "안경", "목걸이", "가방"])
          with st.expander("액세서리 스타일링 팁 보기"):
-             st.warning("너무 많은 액세서리는 투머치가 될 수 있어요.')
+             st.warning("너무 많은 액세서리는 투머치가 될 수 있어요.")
 
      st.markdown("---")
      if st.button("코디 완성하기"):
