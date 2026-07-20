@@ -22,7 +22,7 @@ with col2:
         bottom_color = st.select_slider("핏(Fit)", options=["슬림", "레귤러", "오버핏"])
 
 st.header("디테일 추가")
-     tab1, tab2 = st.tabs(["신발", "액세서리"])
+tab1, tab2 = st.tabs(["신발", "액세서리"])
 with tabl:
          st.write("오늘의 발걸음을 책임질 신발:")
          shoes = st.selectbox("신발 선택", ["스니커즈", "운동화", "구두", "슬리퍼"])
