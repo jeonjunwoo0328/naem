@@ -5,7 +5,7 @@ st.markdown("---")
 st.markdown("## 질문을 하시면 AI 친구가 응답합니다.")
 st.header("1. 기본 정보 입력")
 user_id = st.text_input("이름", placeholder="example_user")
-age = st.number_input("나이를 입력하세요", min_value=1, max_value=100, value=17)
+classroom = st.radio("반", ["1", "2", "3"], horizontal=True)
 question = st.text_area("AI에게 보낼 질문을 입력하세요", placeholder="여기에 질문을 작성해 주세요.")
 
 st.header("2. 챗봇 설정")
