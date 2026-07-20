@@ -1,6 +1,6 @@
 import streamlit as st
 
-with st. slider:
+with st.slider:
     st.header("프로필")
     user_name = st.text_input("닉네임")
     weather = st.selctbox("오늘 날씨", ["맑음", "흐림", "비/눈", "매우 추움"])
