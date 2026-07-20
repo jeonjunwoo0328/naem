@@ -2,8 +2,8 @@ import streamlit as st
 
 st.markdown("# 앱 UI 만들기")
 user_id = st.text_input("이름", placeholder="example_user")
-classroom = st.radio("학년", ["1", "2", "3"], horizontal=True)
-question = st.text_area("AI에게 보낼 질문을 입력하세요", placeholder="여기에 질문을 작성해 주세요.")
+grade = st.radio("학년", ["1", "2", "3"], horizontal=True)
+classroom = st.radio("반", ["1", "2", "3"], horizontal=True)
 level = st.slider("난이도", 0, 100, 50)
 score = st.slider("점수", 0, 100, 50)
 question = st.text_area("소감", placeholder="소감입니다.")
