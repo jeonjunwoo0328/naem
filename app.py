@@ -28,7 +28,7 @@ with tabl:
          shoes = st.selectbox("신발 선택", ["스니커즈", "운동화", "구두", "슬리퍼"])
          with st.expander("신발 선택 팁 보기"):
              st.info("너무 튀는 신발은 지양하도록 해요!")
-     with tab2:
+with tab2:
          st.write("포인트 아이템:")
          acc = st.multiselect("액세서리추가", ["모자", "안경", "목걸이", "가방"])
          with st.expander("액세서리 스타일링 팁 보기"):
