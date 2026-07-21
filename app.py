@@ -52,7 +52,7 @@ if st.button("문제 만들기"):
  st.success("문제 생성 완료")
  st.markdown(quiz)
 
-)
+
             
         
 
