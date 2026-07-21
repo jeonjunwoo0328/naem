@@ -64,7 +64,6 @@ else:
         st.Page(page2, title="오늘의 할 일", icon="✅"),
         st.Page(page3, title="나의 갓생 지수", icon="📈")])
 
-st.title("🌱갓생 살기 플래너")
-pg.run()
+st.title("🌱갓생 살기 플래너") pg.run()
 
 
