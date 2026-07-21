@@ -39,7 +39,7 @@ def create_quiz(field, level):
 
                 신소재공학 관련 객관식 문제 1개를 만들어줘.
                 """
-     }
+}
 
         
     
