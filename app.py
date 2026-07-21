@@ -1,7 +1,7 @@
 import streamlit as st
 
 from openai import Openai
-ai_cilent = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
+ai_client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
                    
 if 'todo_list' not in st.session_state:
     st.session_state.todo_list = []
@@ -78,7 +78,7 @@ def page_report():
             st.rerun()
 
 def page_ai_coach():
-    st.haeder("🤖AI 코치와 대화하기")
+    st.header("🤖AI 코치와 대화하기")
     promprt = st.text_input("질문을 입력하세요")
     if st.button("보내기"):
         response = ai_cilent.responses.create(
