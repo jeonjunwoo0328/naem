@@ -59,6 +59,23 @@ if st.button("문제 만들기"):
  st.success("문제 생성 완료")
  st.markdown(quiz)
 
+st.divider()
+
+st.subheader("📚 오늘의 학습 기록")
+
+if "quiz_count" not in st.session_state:
+    st.session_state.quiz_count = 0
+
+
+if st.button("학습 횟수 증가"):
+    st.session_state.quiz_count += 1
+
+
+st.metric(
+    "푼 문제 수",
+    f"{st.session_state.quiz_count}개"
+)
+
 
             
         
