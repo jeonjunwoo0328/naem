@@ -1,15 +1,10 @@
 import streamlit as st
 from openai import OpenAI
 
-# OpenAI 연결
 ai_client = OpenAI(
     api_key=st.secrets["OPENAI_API_KEY"]
 )
 
-
-# ---------------------------
-# AI 퀴즈 생성 함수
-# ---------------------------
 def create_quiz(field, level):
 
     response = ai_client.chat.completions.create(
@@ -52,12 +47,6 @@ def create_quiz(field, level):
 
     return response.choices[0].message.content
 
-
-
-# ---------------------------
-# Streamlit 화면
-# ---------------------------
-
 st.title("🧪 Material Quiz AI")
 st.subheader("AI 신소재공학 퀴즈 생성기")
 
@@ -67,9 +56,6 @@ st.write(
     시험 공부와 전공 복습에 활용하세요.
     """
 )
-
-
-# 분야 선택
 
 field = st.selectbox(
     "🔬 분야 선택",
@@ -82,9 +68,6 @@ field = st.selectbox(
         "세라믹 소재"
     ]
 )
-
-
-# 난이도 선택
 
 level = st.selectbox(
     "🎯 난이도",
@@ -106,12 +89,6 @@ if st.button("🚀 문제 만들기"):
     st.success("문제 생성 완료!")
 
     st.markdown(quiz)
-
-
-
-# ---------------------------
-# 학습 기록
-# ---------------------------
 
 st.divider()
 
