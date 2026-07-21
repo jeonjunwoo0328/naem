@@ -8,9 +8,9 @@ ai_client = OpenAI(
 
 
 # ---------------------------
-# AI 분석 함수
+# AI 퀴즈 생성 함수
 # ---------------------------
-def analyze_paper(text):
+def create_quiz(field, level):
 
     response = ai_client.chat.completions.create(
         model="gpt-5.5",
@@ -18,22 +18,34 @@ def analyze_paper(text):
             {
                 "role": "system",
                 "content": """
-                너는 신소재공학 전문 연구 조교이다.
-                사용자가 입력한 논문 내용을 분석한다.
+                너는 신소재공학 교수이다.
+                학생의 전공 공부를 돕기 위한 퀴즈를 만든다.
 
-                반드시 아래 순서로 답변한다.
+                반드시 다음 형식으로 작성한다.
 
-                1. 논문 내용 요약
-                2. 연구 목적
-                3. 사용된 소재 및 기술
-                4. 주요 결과
-                5. 핵심 전공 영어 단어
-                6. 어려운 문장 설명
+                [문제]
+                문제 내용
+
+                A.
+                B.
+                C.
+                D.
+
+                [정답]
+                정답 번호
+
+                [해설]
+                자세한 설명
                 """
             },
             {
                 "role": "user",
-                "content": text
+                "content": f"""
+                분야: {field}
+                난이도: {level}
+
+                신소재공학 관련 객관식 문제 1개를 만들어줘.
+                """
             }
         ]
     )
@@ -46,75 +58,74 @@ def analyze_paper(text):
 # Streamlit 화면
 # ---------------------------
 
-st.title("🧪 Material AI Lab")
-st.subheader("AI 신소재 논문 분석 도우미")
+st.title("🧪 Material Quiz AI")
+st.subheader("AI 신소재공학 퀴즈 생성기")
 
 st.write(
     """
-    신소재공학 논문(Abstract)을 입력하면
-    AI가 연구 내용을 분석하고 전공 영어 학습을 도와줍니다.
+    신소재공학 전공 분야별 문제를 AI가 생성합니다.
+    시험 공부와 전공 복습에 활용하세요.
     """
 )
 
 
-paper = st.text_area(
-    "📄 논문 Abstract를 입력하세요",
-    height=300,
-    placeholder=
-    """
-    Example:
-    Lithium-ion batteries have attracted significant attention...
-    """
+# 분야 선택
+
+field = st.selectbox(
+    "🔬 분야 선택",
+    [
+        "배터리 소재",
+        "반도체 소재",
+        "나노 소재",
+        "금속 재료",
+        "고분자 소재",
+        "세라믹 소재"
+    ]
 )
 
 
-if st.button("🔍 논문 분석하기"):
+# 난이도 선택
 
-    if paper.strip() == "":
-        st.warning("논문 내용을 입력해주세요.")
+level = st.selectbox(
+    "🎯 난이도",
+    [
+        "기초",
+        "대학교 전공",
+        "심화"
+    ]
+)
 
-    else:
-        with st.spinner("AI가 논문을 분석 중입니다..."):
 
-            result = analyze_paper(paper)
 
-        st.success("분석 완료!")
+if st.button("🚀 문제 만들기"):
 
-        st.markdown(result)
+    with st.spinner("AI 교수가 문제를 만드는 중..."):
+
+        quiz = create_quiz(field, level)
+
+    st.success("문제 생성 완료!")
+
+    st.markdown(quiz)
 
 
 
 # ---------------------------
-# 추가 질문 기능
+# 학습 기록
 # ---------------------------
 
 st.divider()
 
-st.subheader("💬 논문 내용 질문하기")
+st.subheader("📚 오늘의 학습 기록")
+
+if "quiz_count" not in st.session_state:
+    st.session_state.quiz_count = 0
 
 
-question = st.chat_input(
-    "예: 이 논문의 핵심 소재는 무엇인가요?"
+if st.button("학습 횟수 증가"):
+    st.session_state.quiz_count += 1
+
+
+st.metric(
+    "푼 문제 수",
+    f"{st.session_state.quiz_count}개"
 )
-
-
-if question:
-
-    response = ai_client.chat.completions.create(
-        model="gpt-5.5",
-        messages=[
-            {
-                "role": "system",
-                "content":
-                "너는 신소재공학 논문을 설명하는 전문 연구원이다."
-            },
-            {
-                "role": "user",
-                "content": question
-            }
-        ]
-    )
-
-    st.chat_message("assistant").write(
-        response.choices[0].message.content
-    )
