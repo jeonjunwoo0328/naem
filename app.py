@@ -60,9 +60,9 @@ else:
         st.session_state.todo_list = []
         st.rerun()
     pg = st.navigation([
-        st.Page(page_motto, title="오늘의 다짐", icon="📣"),
-        st.Page(page_todo, title="오늘의 할 일", icon="✅"),
-        st.Page(page_repeort, title="나의 갓생 지수", icon="📈")])
+        st.Page(page1, title="오늘의 다짐", icon="📣"),
+        st.Page(page2, title="오늘의 할 일", icon="✅"),
+        st.Page(page3, title="나의 갓생 지수", icon="📈")])
 
 st.title("🌱갓생 살기 플래너"
 pg.run()
