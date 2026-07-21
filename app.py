@@ -33,6 +33,7 @@ def create_quiz(field, level):
     )
 
     st.title("신소재공학과 문제 생성")
+    
     st.header("🧪 Material Quiz AI")
 
 
