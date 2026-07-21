@@ -36,7 +36,7 @@ def create_quiz(field, level):
 st.title("🧪 Material Quiz AI")
 st.header("AI🧪신소재공학 퀴즈 생성기")
 
-field = st.selectbox("분야 선택", [ "배터리 소재",  "배터리 소재",  "금속 재료", "고분자 소재", "세라믹 소재"])
+field = st.selectbox("분야 선택", ["배터리 소재",  "금속 재료", "고분자 소재", "세라믹 소재"])
     
 level = st.selectbox("난이도 선택", ["기초", "심화", "전문가"])
 if st.button("문제 만들기"):
