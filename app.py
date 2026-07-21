@@ -65,5 +65,5 @@ else:
         st.Page(page_repeort, title="나의 갓생 지수", icon="📈")])
 
 st.title("🌱갓생 살기 플래너")
- pg.run()
+
 
