@@ -22,7 +22,7 @@ if st.button("다짐 저장"):
 st.markdown("---")
 
 def page2():
-st.header("✅ 2. 오늘의 할 일")
+ st.header("✅ 2. 오늘의 할 일")
 st.write(f"현재 다짐: **{st.session_state.user_motto}**")
 new_todo = st.text_input("추가할 할 일을 입력하세요", key="todo_input")
 st.button("추가하기", on_click=add_todo)
