@@ -78,6 +78,33 @@ def page_report():
             st.rerun()
 
 def page_ai_coach():
+  st.heaeder("AI 코치와 대화하기")
+  if "message" not in st.session_state:
+    st. session_state.messages = [
+      {"role": "system", "content": "너는 사용자와의 할 일 목록과달성 정도를 분석하여 조언하는 열정적인 코치야,사용자가 더 멋진 삶을 살 수 있도록 명확한 조언과 응원해줘."}
+     ] 
+     
+for message in st.session_state.messages:
+  if message["role"] != "system":
+    with st.chat_message(message["role"]):
+      st.markdown(message["content"])
+
+question = st.chat_input("질문을 입력하세요.")
+if question:
+  st.session_state.messages.append({"role": "user", "content": question})
+  with st.chat_message("user"):
+    st.markdown(question)
+  with st.chat_message("assistant"):
+    propmt = st.session_state.messages
+    with st.spinner("AI 코치가 생각 중...")
+    response = ai_client.chat.completions.create(
+      mode"gpt=5.4-mini",
+      messages=prompt)
+    ai_response = response.choices[0].message.content
+    st.markdown(ai_response)
+    st.session_state.messages.append({"role": "assistent", "content": ai_response})
+    
+def page_ai_coach():
     st.header("🤖AI 코치와 대화하기")
     promprt = st.text_input("질문을 입력하세요")
     if st.button("보내기"):
