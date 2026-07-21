@@ -40,7 +40,7 @@ def create_quiz(field, level):
 if st.button("문제 만들기"):
     with st.spinner("문제를 만드는 중..."):
         
-quiz = make_quiz(field,level)
+  quiz = make_quiz(field,level)
 st.success("문제 생성 완료")
 st.markdown(quiz)
 
