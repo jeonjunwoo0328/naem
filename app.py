@@ -27,7 +27,7 @@ def create_quiz(field, level):
 
                 (해설)
                 해설
-                 """"
+                """
                 },
                 ]
 
