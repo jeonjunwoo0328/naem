@@ -33,7 +33,7 @@ def create_quiz(field, level):
     )
 
     st.title("신소재공학과 문제 생성")
-    st.subheader("AI 신소재공학 퀴즈 생성기")
+    st.header("AI 신소재공학 퀴즈 생성기")
 
 
     field = st.selectbox("분야 선택", [ "배터리 소재",  "배터리 소재",  "금속 재료", "고분자 소재", "세라믹 소재"])
