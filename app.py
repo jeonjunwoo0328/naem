@@ -83,7 +83,8 @@ def page_ai_coach():
     if st.button("보내기"):
         response = ai_cilent.responses.create(
             model="gpt-5.4-mini",
-            input-prompt)
+            input-prompt
+        )
         
         st.write(response.output_text)
         
