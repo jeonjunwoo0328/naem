@@ -29,19 +29,20 @@ def create_quiz(field, level):
                 해설
                 """
                 },
-                ]
-    ),
-     {
+                {
+
+         {
                 "role": "user",
                 "content": f"""
                 분야: {field}
                 난이도: {level}
 
                 신소재공학 관련 객관식 문제 1개를 만들어줘.
-                """
-}
-
-        
+                """  
+            }
+        ]
+    )        
+                    
     
     return response.choices[0].message.content
 
