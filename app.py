@@ -31,7 +31,7 @@ def create_quiz(field, level):
                        },
                        {
 
-         {
+         
                 "role": "user",
                 "content": f"""
                 분야: {field}
