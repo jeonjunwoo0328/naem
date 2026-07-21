@@ -96,7 +96,7 @@ if question:
     st.markdown(question)
   with st.chat_message("assistant"):
     propmt = st.session_state.messages
-    with st.spinner("AI 코치가 생각 중...")
+  with st.spinner("AI 코치가 생각 중...")
     response = ai_client.chat.completions.create(
       mode"gpt=5.4-mini",
       messages=prompt)
