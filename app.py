@@ -1,110 +1,215 @@
 import streamlit as st
+from openai import OpenAI
 
-# -------------------------------
+# OpenAI 설정
+ai_client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
+
+
+# -----------------------
 # Session State
-# -------------------------------
-if "todo_list" not in st.session_state:
-    st.session_state.todo_list = []
-
-if "user_motto" not in st.session_state:
-    st.session_state.user_motto = "오늘도 화이팅!"
+# -----------------------
+if "history" not in st.session_state:
+    st.session_state.history = []
 
 
-# -------------------------------
-# 할 일 추가 함수
-# -------------------------------
-def add_todo():
-    task = st.session_state.todo_input
-    if task:
-        st.session_state.todo_list.append([task, False])
-        st.toast("할 일이 추가되었습니다!")
-        st.session_state.todo_input = ""
+# -----------------------
+# AI 요청 함수
+# -----------------------
+def ask_ai(prompt):
 
+    response = ai_client.chat.completions.create(
+        model="gpt-5.5",
+        messages=[
+            {
+                "role": "system",
+                "content":
+                """
+                너는 친절한 영어 전문 튜터이다.
+                사용자의 영어 실력을 향상시키기 위해
+                독해, 문법, 작문을 자세히 설명한다.
 
-# -------------------------------
-# 페이지 1 : 오늘의 다짐
-# -------------------------------
-def page1():
-    st.title("🌱 갓생 살기 플래너")
-
-    st.header("📣 1. 오늘의 다짐")
-
-    motto = st.text_input(
-        "나의 한 줄 좌우명을 적어주세요",
-        value=st.session_state.user_motto,
+                설명은:
+                - 쉬운 한국어
+                - 영어 예문
+                - 틀린 이유
+                - 개선 방법
+                순서로 제공한다.
+                """
+            },
+            {
+                "role": "user",
+                "content": prompt
+            }
+        ]
     )
 
-    if st.button("다짐 저장"):
-        st.session_state.user_motto = motto
-        st.success("좌우명이 등록되었습니다!")
+    return response.choices[0].message.content
 
 
-# -------------------------------
-# 페이지 2 : 오늘의 할 일
-# -------------------------------
-def page2():
-    st.header("✅ 2. 오늘의 할 일")
 
-    st.write(f"현재 다짐: **{st.session_state.user_motto}**")
+# -----------------------
+# 페이지
+# -----------------------
 
-    st.text_input(
-        "추가할 할 일을 입력하세요",
-        key="todo_input"
+def reading_page():
+
+    st.header("📖 영어 독해 훈련")
+
+    level = st.selectbox(
+        "난이도",
+        ["초급", "중급", "고급"]
     )
 
-    st.button("추가하기", on_click=add_todo)
-
-    st.markdown("---")
-
-    if not st.session_state.todo_list:
-        st.info("등록된 할 일이 없습니다.")
-
-    for i in range(len(st.session_state.todo_list)):
-        col1, col2, col3 = st.columns([4, 1, 1])
-
-        with col1:
-            st.write(f"{i+1}. {st.session_state.todo_list[i][0]}")
-
-        with col2:
-            if st.button("완료", key=f"btn_{i}"):
-                st.session_state.todo_list[i][1] = True
-                st.rerun()
-
-        with col3:
-            if st.session_state.todo_list[i][1]:
-                st.write("✅ 달성!")
+    topic = st.text_input(
+        "원하는 주제",
+        "환경"
+    )
 
 
-# -------------------------------
-# 페이지 3 : 갓생 지수
-# -------------------------------
-def page3():
-    st.header("📈 3. 나의 갓생 지수")
+    if st.button("독해 지문 만들기"):
 
-    if not st.session_state.todo_list:
-        st.write("아직 등록된 할 일이 없습니다.")
-        return
+        prompt = f"""
+        {level} 수준의 영어 독해 지문을 만들어줘.
 
-    total = len(st.session_state.todo_list)
-    count = sum(item[1] for item in st.session_state.todo_list)
+        주제: {topic}
 
-    progress = count / total
+        구성:
+        1. 영어 지문
+        2. 한국어 해석
+        3. 중요 단어
+        4. 독해 문제 3개
+        """
 
-    st.metric("오늘의 달성률", f"{progress*100:.1f}%")
-    st.progress(progress)
+        result = ask_ai(prompt)
 
-    if st.button("기록 전체 초기화"):
-        st.session_state.todo_list = []
-        st.rerun()
+        st.write(result)
 
 
-# -------------------------------
+
+def grammar_page():
+
+    st.header("✏️ 영어 문법 코치")
+
+    sentence = st.text_area(
+        "검사할 영어 문장을 입력하세요"
+    )
+
+
+    if st.button("문법 검사"):
+
+        prompt = f"""
+        다음 영어 문장을 분석해줘.
+
+        문장:
+        {sentence}
+
+        알려줄 내용:
+        1. 문법 오류
+        2. 올바른 문장
+        3. 문법 설명
+        4. 비슷한 예문
+        """
+
+        result = ask_ai(prompt)
+
+        st.write(result)
+
+
+
+def writing_page():
+
+    st.header("📝 영어 작문 첨삭")
+
+    writing = st.text_area(
+        "작성한 영어 글을 입력하세요"
+    )
+
+
+    if st.button("첨삭 받기"):
+
+        prompt = f"""
+        다음 영어 글을 첨삭해줘.
+
+        글:
+        {writing}
+
+        분석:
+        1. 자연스러운 표현 수정
+        2. 문법 오류
+        3. 더 좋은 표현
+        4. 점수 (100점 기준)
+        """
+
+        result = ask_ai(prompt)
+
+        st.write(result)
+
+
+
+def conversation_page():
+
+    st.header("💬 영어 회화 연습")
+
+    situation = st.text_input(
+        "상황",
+        "카페에서 주문하기"
+    )
+
+
+    if st.button("회화 시작"):
+
+        prompt = f"""
+        영어 회화 연습을 시작하자.
+
+        상황:
+        {situation}
+
+        규칙:
+        - 영어로 대화
+        - 내가 틀리면 한국어로 설명
+        - 자연스러운 표현 알려주기
+        """
+
+        result = ask_ai(prompt)
+
+        st.write(result)
+
+
+
+# -----------------------
 # Navigation
-# -------------------------------
-pg = st.navigation([
-    st.Page(page1, title="오늘의 다짐", icon="📣"),
-    st.Page(page2, title="오늘의 할 일", icon="✅"),
-    st.Page(page3, title="나의 갓생 지수", icon="📈"),
-])
+# -----------------------
+
+pg = st.navigation(
+    [
+        st.Page(
+            reading_page,
+            title="독해 공부",
+            icon="📖"
+        ),
+
+        st.Page(
+            grammar_page,
+            title="문법 검사",
+            icon="✏️"
+        ),
+
+        st.Page(
+            writing_page,
+            title="작문 첨삭",
+            icon="📝"
+        ),
+
+        st.Page(
+            conversation_page,
+            title="영어 회화",
+            icon="💬"
+        )
+    ],
+    position="top"
+)
+
+
+st.title("🌎 AI 영어 공부 도우미")
 
 pg.run()
