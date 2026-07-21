@@ -32,7 +32,7 @@ def create_quiz(field, level):
                 ]
     )
 
-return response.choices[0].message.content
+ return response.choices[0].message.content
 
 st.title("🧪 Material Quiz AI")
 st.header("AI🧪신소재공학 퀴즈 생성기")
